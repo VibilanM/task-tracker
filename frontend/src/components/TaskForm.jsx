@@ -111,7 +111,7 @@ export default function TaskForm({ onSubmit, editingTask, onCancelEdit }) {
           id="description"
           name="description"
           placeholder="Add some details..."
-          rows={3}
+          rows={2}
           value={form.description}
           onChange={handleChange}
           className={errors.description ? "input-error" : ""}
