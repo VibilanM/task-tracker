@@ -8,9 +8,6 @@ async function addTask(req, res) {
             return res.status(400).json({ message: "Title is required" });
         }
 
-        if (!due) {
-            return res.status(400).json({ message: "Due date is required" });
-        }
 
         const task = new Task({
             title,
@@ -21,7 +18,7 @@ async function addTask(req, res) {
         });
 
         await task.save();
-        res.status(201).json({ message: "Task added successfully" });
+        res.status(201).json({ message: "Task added successfully", task });
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
@@ -78,7 +75,7 @@ async function getTaskById(req, res) {
     try {
         const { id } = req.params;
 
-        const task = Task.findById(id);
+        const task = await Task.findById(id);
 
         if (!task) {
             return res.status(404).json({ message: "Task not found" });

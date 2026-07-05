@@ -25,8 +25,11 @@ export function useTasks() {
 
   const addTask = async (taskData) => {
     const { data } = await taskService.createTask(taskData);
-    // Backend returns { message }, so re-fetch to get the full task with _id
-    await fetchTasks();
+    if (data.task) {
+      setTasks((prev) => [data.task, ...prev]);
+    } else {
+      await fetchTasks();
+    }
     return data;
   };
 
