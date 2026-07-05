@@ -1,6 +1,6 @@
 import TaskCard from "./TaskCard";
 
-export default function TaskList({ tasks, loading, error, onEdit, onDelete, hasFilters }) {
+export default function TaskList({ tasks, loading, error, onEdit, onDelete, onToggleStatus, hasFilters }) {
   if (loading) {
     return (
       <div className="task-list-status">
@@ -38,6 +38,7 @@ export default function TaskList({ tasks, loading, error, onEdit, onDelete, hasF
           task={task}
           onEdit={onEdit}
           onDelete={onDelete}
+          onToggleStatus={onToggleStatus}
         />
       ))}
     </div>

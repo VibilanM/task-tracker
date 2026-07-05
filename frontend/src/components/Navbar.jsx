@@ -3,7 +3,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-brand">
         <span className="navbar-logo">☑</span>
-        <span className="navbar-title">Task Flow</span>
+        <span className="navbar-title">Task Tracker</span>
       </div>
       <div className="navbar-tagline">
         Organize Your Workflow

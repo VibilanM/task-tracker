@@ -58,6 +58,15 @@ export default function TaskPage() {
     }
   }
 
+  async function handleToggleStatus(id, newStatus) {
+    try {
+      await editTask(id, { status: newStatus });
+      toast.success(newStatus === "Completed" ? "Task marked as complete!" : "Task moved back to pending.");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to update status.");
+    }
+  }
+
   // Filter and Sort implementation
   const processedTasks = useMemo(() => {
     let result = [...tasks];
@@ -79,6 +88,13 @@ export default function TaskPage() {
 
     // 3. Sorting
     result.sort((a, b) => {
+      // Always push completed tasks to the bottom (unless filtering by status)
+      if (statusFilter === "All") {
+        const aCompleted = a.status === "Completed" ? 1 : 0;
+        const bCompleted = b.status === "Completed" ? 1 : 0;
+        if (aCompleted !== bCompleted) return aCompleted - bCompleted;
+      }
+
       if (sortBy === "Newest") {
         return new Date(b.createdAt) - new Date(a.createdAt);
       }
@@ -91,12 +107,11 @@ export default function TaskPage() {
         if (priorityB !== priorityA) {
           return priorityB - priorityA;
         }
-        // tie breaker: newest first
         return new Date(b.createdAt) - new Date(a.createdAt);
       }
       if (sortBy === "DueDate") {
         if (!a.due && !b.due) return new Date(b.createdAt) - new Date(a.createdAt);
-        if (!a.due) return 1; // puts items without due dates at the end
+        if (!a.due) return 1;
         if (!b.due) return -1;
         return new Date(a.due) - new Date(b.due);
       }
@@ -142,6 +157,7 @@ export default function TaskPage() {
           error={error}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          onToggleStatus={handleToggleStatus}
           hasFilters={hasFilters}
         />
       </div>

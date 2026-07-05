@@ -11,7 +11,7 @@ function App() {
         <TaskPage />
       </main>
       <footer className="app-footer">
-        <p>Task Flow App &copy; {new Date().getFullYear()}</p>
+        <p>Task Tracker &copy; {new Date().getFullYear()}</p>
       </footer>
       <ToastContainer position="bottom-right" theme="dark" />
     </div>

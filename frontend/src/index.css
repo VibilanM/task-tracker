@@ -4,21 +4,21 @@
 :root {
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
   
-  /* Color Palette - Premium Slate & Violet theme */
-  --bg-primary: #f8fafc;
+  /* Color Palette - Premium Slate & Muted Green theme */
+  --bg-primary: #f8faf9;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #f1f5f9;
+  --bg-tertiary: #f1f5f3;
   
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-primary: #0f1a16;
+  --text-secondary: #475654;
+  --text-muted: #94a8a3;
   
-  --border-color: #e2e8f0;
-  --border-focus: #6366f1;
+  --border-color: #d8e0dc;
+  --border-focus: #10b981;
   
-  --primary-color: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-glow: rgba(99, 102, 241, 0.15);
+  --primary-color: #10b981;
+  --primary-hover: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.15);
   
   --success-color: #10b981;
   --danger-color: #ef4444;
@@ -43,20 +43,20 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-primary: #0b0f19;
-    --bg-secondary: #151b2c;
-    --bg-tertiary: #1e2640;
+    --bg-primary: #0b120f;
+    --bg-secondary: #131e19;
+    --bg-tertiary: #1a2b24;
     
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-primary: #f0f5f3;
+    --text-secondary: #94a8a3;
+    --text-muted: #5e7a71;
     
-    --border-color: #242f4c;
-    --border-focus: #818cf8;
+    --border-color: #1e3a2c;
+    --border-focus: #34d399;
     
-    --primary-color: #818cf8;
-    --primary-hover: #6366f1;
-    --primary-glow: rgba(129, 140, 248, 0.25);
+    --primary-color: #34d399;
+    --primary-hover: #10b981;
+    --primary-glow: rgba(52, 211, 153, 0.25);
     
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
@@ -398,7 +398,7 @@ body {
 }
 
 .status-badge.status-pending {
-  background-color: rgba(99, 102, 241, 0.15);
+  background-color: rgba(16, 185, 129, 0.15);
   color: var(--primary-color);
 }
 
@@ -684,3 +684,93 @@ body {
 .sort-selector select:focus {
   border-color: var(--border-focus);
 }
+
+/* Complete / Undo Buttons */
+.btn-complete {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.btn-complete:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.btn-undo {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--primary-color);
+}
+
+.btn-undo:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+/* Danger Button (for modal) */
+.btn-danger {
+  background-color: var(--danger-color);
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+}
+
+/* Confirmation Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.modal-content {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: scaleIn 0.15s ease-out;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-message {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.modal-actions .btn {
+  min-width: 90px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
