@@ -11,7 +11,15 @@ export function useTasks() {
       setLoading(true);
       setError(null);
       const { data } = await taskService.getAllTasks();
-      setTasks(data);
+      if (Array.isArray(data)) {
+        setTasks(data);
+      } else if (data && Array.isArray(data.tasks)) {
+        setTasks(data.tasks);
+      } else {
+        console.error("Expected array of tasks, but received:", data);
+        setError("Invalid data format received from server");
+        setTasks([]);
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch tasks");
     } finally {
