@@ -1,0 +1,52 @@
+import { useState, useEffect, useCallback } from "react";
+import * as taskService from "../services/taskService";
+
+export function useTasks() {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchTasks = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const { data } = await taskService.getAllTasks();
+      setTasks(data);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to fetch tasks");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  const addTask = async (taskData) => {
+    const { data } = await taskService.createTask(taskData);
+    // Backend returns { message }, so re-fetch to get the full task with _id
+    await fetchTasks();
+    return data;
+  };
+
+  const removeTask = async (id) => {
+    // Optimistic removal
+    setTasks((prev) => prev.filter((t) => t._id !== id));
+    try {
+      await taskService.deleteTask(id);
+    } catch (err) {
+      // Rollback on failure
+      await fetchTasks();
+      throw err;
+    }
+  };
+
+  const editTask = async (id, taskData) => {
+    const { data: updated } = await taskService.updateTask(id, taskData);
+    setTasks((prev) => prev.map((t) => (t._id === id ? updated : t)));
+    return updated;
+  };
+
+  return { tasks, loading, error, addTask, removeTask, editTask, fetchTasks };
+}
